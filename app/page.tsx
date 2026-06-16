@@ -38,10 +38,10 @@ export default function Home() {
             <label>Repair type</label>
             <div className="choices two">
               <button onClick={() => setRepairType("corner")} className={repairType === "corner" ? "active" : ""}>
-                Per corner<br /><span>Â£6 each</span>
+                Per corner<br /><span>£6 each</span>
               </button>
               <button onClick={() => setRepairType("full")} className={repairType === "full" ? "active" : ""}>
-                All 4 corners<br /><span>Â£20 total</span>
+                All 4 corners<br /><span>£20 total</span>
               </button>
             </div>
 
@@ -73,16 +73,16 @@ export default function Home() {
                 Customer drop-off and customer collection<br /><span>Free</span>
               </button>
               <button onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>
-                Collected and delivered to an NW11 address<br /><span>Â£5 total</span>
+                Collected and delivered to an NW11 address<br /><span>£5 total</span>
               </button>
               <button onClick={() => setDelivery("nw4")} className={delivery === "nw4" ? "active" : ""}>
-                Collected and delivered to an NW4 address<br /><span>Â£8 total</span>
+                Collected and delivered to an NW4 address<br /><span>£8 total</span>
               </button>
             </div>
 
             <div className="total">
               <span>Total</span>
-              <strong>Â£{total}</strong>
+              <strong>£{total}</strong>
             </div>
           </div>
         </div>
@@ -91,10 +91,10 @@ export default function Home() {
       <section className="wrap section">
         <h2>Pricing</h2>
         <div className="cards">
-          <div className="card"><h3>1 Corner</h3><p>Â£6</p></div>
-          <div className="card"><h3>2 Corners</h3><p>Â£12</p></div>
-          <div className="card"><h3>3 Corners</h3><p>Â£18</p></div>
-          <div className="card dark"><h3>All 4 Corners</h3><p>Â£20</p></div>
+          <div className="card"><h3>1 Corner</h3><p>£6</p></div>
+          <div className="card"><h3>2 Corners</h3><p>£12</p></div>
+          <div className="card"><h3>3 Corners</h3><p>£18</p></div>
+          <div className="card dark"><h3>All 4 Corners</h3><p>£20</p></div>
         </div>
       </section>
 
@@ -103,8 +103,8 @@ export default function Home() {
           <div>
             <h2>Collection and delivery</h2>
             <ul className="list">
-              <li>Collected and delivered to an NW11 address: Â£5 total</li>
-              <li>Collected and delivered to an NW4 address: Â£8 total</li>
+              <li>Collected and delivered to an NW11 address: £5 total</li>
+              <li>Collected and delivered to an NW4 address: £8 total</li>
               <li>All other areas: customer drop-off and customer collection only</li>
             </ul>
 
@@ -141,7 +141,7 @@ export default function Home() {
 
             <div className="total">
               <span>Order total</span>
-              <strong>Â£{total}</strong>
+              <strong>£{total}</strong>
             </div>
 
             <button className="button full">Continue to payment</button>
@@ -161,3 +161,4 @@ export default function Home() {
     </main>
   );
 }
+

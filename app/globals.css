@@ -1,4 +1,4 @@
-* {
+﻿* {
   box-sizing: border-box;
 }
 
@@ -87,7 +87,7 @@ h3 {
 
 .button {
   display: inline-flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   background: #1c1917;
   color: white;
@@ -271,3 +271,4 @@ footer {
   border: 1px solid #1c1917;
   margin-left: 12px;
 }
+
