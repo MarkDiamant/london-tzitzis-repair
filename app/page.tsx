@@ -1,4 +1,5 @@
-﻿"use client";
+﻿@'
+"use client";
 
 import { useMemo, useState } from "react";
 
@@ -60,11 +61,19 @@ export default function Home() {
 
             <label>Quantity of talleisim</label>
             <div className="choices four">
-              {[1, 2, 3, 4].map((n) => (
+              {[1, 2, 3].map((n) => (
                 <button key={n} onClick={() => setQuantity(n)} className={quantity === n ? "active" : ""}>
                   {n}
                 </button>
               ))}
+              <input
+                type="number"
+                min="4"
+                value={quantity >= 4 ? quantity : ""}
+                onChange={(e) => setQuantity(Math.max(4, Number(e.target.value) || 4))}
+                placeholder="4+"
+                className="quantityInput"
+              />
             </div>
 
             <label>Collection / delivery</label>
@@ -161,4 +170,4 @@ export default function Home() {
     </main>
   );
 }
-
+'@ | Set-Content -Encoding utf8 app\page.tsx
