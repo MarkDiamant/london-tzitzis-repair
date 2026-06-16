@@ -1,3 +1,4 @@
+@'
 "use client";
 
 import { useMemo, useState } from "react";
@@ -6,10 +7,11 @@ export default function Home() {
   const [repairType, setRepairType] = useState<"corner" | "full">("full");
   const [corners, setCorners] = useState(1);
   const [delivery, setDelivery] = useState<"dropoff" | "nw11" | "nw4">("dropoff");
+  const [quantity, setQuantity] = useState(1);
 
   const repairTotal = repairType === "full" ? 20 : corners === 4 ? 20 : corners * 6;
   const deliveryTotal = delivery === "nw11" ? 5 : delivery === "nw4" ? 8 : 0;
-  const total = useMemo(() => repairTotal + deliveryTotal, [repairTotal, deliveryTotal]);
+  const total = useMemo(() => repairTotal * quantity + deliveryTotal, [repairTotal, quantity, deliveryTotal]);
 
   return (
     <main className="site">
@@ -28,7 +30,7 @@ export default function Home() {
               <span>No text messages or WhatsApp</span>
             </div>
 
-            <a href="#order" className="button">Order now</a><a href="/pricing" className="button secondary">View prices</a>
+            <a href="#order" className="button">Order now</a>
           </div>
 
           <div className="priceCard">
@@ -56,6 +58,15 @@ export default function Home() {
                 </div>
               </>
             )}
+
+            <label>Quantity of talleisim</label>
+            <div className="choices four">
+              {[1, 2, 3, 4].map((n) => (
+                <button key={n} onClick={() => setQuantity(n)} className={quantity === n ? "active" : ""}>
+                  {n}
+                </button>
+              ))}
+            </div>
 
             <label>Collection / delivery</label>
             <div className="choices one">
@@ -93,9 +104,9 @@ export default function Home() {
           <div>
             <h2>Collection and delivery</h2>
             <ul className="list">
-              <li>NW11: £5 total, including both collection and delivery</li>
-              <li>NW4: £8 total, including both collection and delivery</li>
-              <li>All other areas: Customer drop-off and customer collection only</li>
+              <li>Collected and delivered to an NW11 address: £5 total</li>
+              <li>Collected and delivered to an NW4 address: £8 total</li>
+              <li>All other areas: customer drop-off and customer collection only</li>
             </ul>
 
             <h2>Drop-off address</h2>
@@ -122,7 +133,7 @@ export default function Home() {
 
             {delivery === "dropoff" && (
               <p className="notice">
-                You selected Customer drop-off and customer collection, so no home address is needed.
+                You selected customer drop-off and customer collection, so no home address is needed.
               </p>
             )}
 
@@ -151,3 +162,4 @@ export default function Home() {
     </main>
   );
 }
+'@ | Set-Content -Encoding utf8 app\page.tsx
