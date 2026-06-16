@@ -1,5 +1,4 @@
-﻿@'
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 
@@ -170,4 +169,3 @@ export default function Home() {
     </main>
   );
 }
-'@ | Set-Content -Encoding utf8 app\page.tsx

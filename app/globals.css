@@ -1,5 +1,4 @@
-@'
-* {
+﻿* {
   box-sizing: border-box;
 }
 
@@ -280,4 +279,3 @@ footer {
     flex-direction: column;
   }
 }
-'@ | Set-Content -Encoding utf8 app\globals.css
