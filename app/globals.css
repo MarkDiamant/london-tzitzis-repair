@@ -1,4 +1,3 @@
-@'
 * {
   box-sizing: border-box;
 }
@@ -265,4 +264,3 @@ footer {
     flex-direction: column;
   }
 }
-'@ | Set-Content -Path "app\globals.css"

@@ -1,4 +1,3 @@
-@'
 "use client";
 
 import { useMemo, useState } from "react";
@@ -8,7 +7,7 @@ export default function Home() {
   const [corners, setCorners] = useState(1);
   const [delivery, setDelivery] = useState<"dropoff" | "nw11" | "nw4">("dropoff");
 
-  const repairTotal = repairType === "full" ? 20 : corners * 6;
+  const repairTotal = repairType === "full" ? 20 : corners === 4 ? 20 : corners * 6;
   const deliveryTotal = delivery === "nw11" ? 5 : delivery === "nw4" ? 8 : 0;
   const total = useMemo(() => repairTotal + deliveryTotal, [repairTotal, deliveryTotal]);
 
@@ -61,7 +60,7 @@ export default function Home() {
             <label>Collection / delivery</label>
             <div className="choices one">
               <button onClick={() => setDelivery("dropoff")} className={delivery === "dropoff" ? "active" : ""}>
-                Drop-off and collection<br /><span>Free</span>
+                Customer drop-off and customer collection<br /><span>Free</span>
               </button>
               <button onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>
                 NW11 collection and delivery<br /><span>£5 total</span>
@@ -96,7 +95,7 @@ export default function Home() {
             <ul className="list">
               <li>NW11: £5 total, including both collection and delivery</li>
               <li>NW4: £8 total, including both collection and delivery</li>
-              <li>All other areas: drop-off and collection only</li>
+              <li>All other areas: Customer drop-off and customer collection only</li>
             </ul>
 
             <h2>Drop-off address</h2>
@@ -123,7 +122,7 @@ export default function Home() {
 
             {delivery === "dropoff" && (
               <p className="notice">
-                You selected drop-off and collection, so no home address is needed.
+                You selected Customer drop-off and customer collection, so no home address is needed.
               </p>
             )}
 
@@ -152,4 +151,3 @@ export default function Home() {
     </main>
   );
 }
-'@ | Set-Content -Path "app\page.tsx"
