@@ -264,3 +264,10 @@ footer {
     flex-direction: column;
   }
 }
+
+.button.secondary {
+  background: white;
+  color: #1c1917;
+  border: 1px solid #1c1917;
+  margin-left: 12px;
+}

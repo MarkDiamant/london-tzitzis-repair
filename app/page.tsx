@@ -28,7 +28,7 @@ export default function Home() {
               <span>No text messages or WhatsApp</span>
             </div>
 
-            <a href="#order" className="button">Order now</a>
+            <a href="#order" className="button">Order now</a><a href="/pricing" className="button secondary">View prices</a>
           </div>
 
           <div className="priceCard">
@@ -63,10 +63,10 @@ export default function Home() {
                 Customer drop-off and customer collection<br /><span>Free</span>
               </button>
               <button onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>
-                NW11 collection and delivery<br /><span>£5 total</span>
+                Collected and delivered to an NW11 address<br /><span>£5 total</span>
               </button>
               <button onClick={() => setDelivery("nw4")} className={delivery === "nw4" ? "active" : ""}>
-                NW4 collection and delivery<br /><span>£8 total</span>
+                Collected and delivered to an NW4 address<br /><span>£8 total</span>
               </button>
             </div>
 
