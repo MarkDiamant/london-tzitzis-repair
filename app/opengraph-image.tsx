@@ -12,49 +12,98 @@ export default function OpenGraphImage() {
     (
       <div
         style={{
-          background: "#fafaf8",
+          background: "linear-gradient(135deg, #111827 0%, #1c1917 55%, #3f3326 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          color: "#1c1917",
+          padding: "70px",
+          color: "white",
           fontFamily: "Arial",
+          position: "relative",
         }}
       >
         <div
           style={{
-            background: "#111827",
-            color: "white",
-            width: 120,
-            height: 120,
-            borderRadius: 24,
+            position: "absolute",
+            right: 70,
+            top: 70,
+            background: "#f5f0e8",
+            color: "#111827",
+            width: 132,
+            height: 132,
+            borderRadius: 30,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 44,
-            fontWeight: 700,
-            marginBottom: 40,
+            fontSize: 48,
+            fontWeight: 800,
           }}
         >
           LTR
         </div>
 
-        <div style={{ fontSize: 72, fontWeight: 700, marginBottom: 20 }}>
-          London Tzitzis Repair
-        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            maxWidth: 900,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 28,
+              letterSpacing: 4,
+              textTransform: "uppercase",
+              color: "#d6c7a1",
+              fontWeight: 700,
+              marginBottom: 26,
+            }}
+          >
+            Local Tzitzis String Repair
+          </div>
 
-        <div style={{ fontSize: 32, color: "#57534e", marginBottom: 40 }}>
-          Repair of tzitzis strings on tallis and tzitzis garments
-        </div>
+          <div
+            style={{
+              fontSize: 86,
+              lineHeight: 1,
+              fontWeight: 900,
+              marginBottom: 26,
+            }}
+          >
+            London Tzitzis Repair
+          </div>
 
-        <div style={{ fontSize: 28, color: "#1c1917" }}>
-          From £6 per corner • NW11 & NW4 collection available
-        </div>
+          <div
+            style={{
+              width: 180,
+              height: 8,
+              background: "#d6c7a1",
+              borderRadius: 999,
+              marginBottom: 30,
+            }}
+          />
 
-        <div style={{ fontSize: 28, color: "#1c1917", marginTop: 12 }}>
-          Call only: 07562 717278
+          <div
+            style={{
+              fontSize: 38,
+              lineHeight: 1.35,
+              color: "#f5f0e8",
+              marginBottom: 32,
+            }}
+          >
+            From £6 per corner · NW11 & NW4 collection available
+          </div>
+
+          <div
+            style={{
+              fontSize: 34,
+              fontWeight: 800,
+              color: "white",
+            }}
+          >
+            Call only: 07562 717278
+          </div>
         </div>
       </div>
     ),
