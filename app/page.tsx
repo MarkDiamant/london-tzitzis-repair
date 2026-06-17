@@ -7,10 +7,68 @@ export default function Home() {
   const [corners, setCorners] = useState(1);
   const [delivery, setDelivery] = useState<"dropoff" | "nw11" | "nw4">("dropoff");
   const [quantity, setQuantity] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    postcode: "",
+    repairNotes: "",
+    preferredTimes: "",
+  });
 
   const repairTotal = repairType === "full" ? 20 : corners === 4 ? 20 : corners * 6;
   const deliveryTotal = delivery === "nw11" ? 5 : delivery === "nw4" ? 8 : 0;
   const total = useMemo(() => repairTotal * quantity + deliveryTotal, [repairTotal, quantity, deliveryTotal]);
+
+  const updateField = (field: keyof typeof formData, value: string) => {
+    setFormData((current) => ({ ...current, [field]: value }));
+  };
+
+  const handleCheckout = async () => {
+    if (!formData.name || !formData.phone || !formData.email) {
+      alert("Please enter your name, phone number and email address.");
+      return;
+    }
+
+    if (delivery !== "dropoff" && (!formData.address || !formData.postcode)) {
+      alert("Please enter your collection and delivery address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          repairType,
+          corners,
+          quantity,
+          delivery,
+          total,
+          ...formData,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.url) {
+        alert(data.error || "Unable to start payment. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      window.location.href = data.url;
+    } catch {
+      alert("Unable to start payment. Please try again.");
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main className="site">
@@ -37,10 +95,10 @@ export default function Home() {
 
             <label>Repair type</label>
             <div className="choices two">
-              <button onClick={() => setRepairType("corner")} className={repairType === "corner" ? "active" : ""}>
+              <button type="button" onClick={() => setRepairType("corner")} className={repairType === "corner" ? "active" : ""}>
                 Per corner<br /><span>£6 each</span>
               </button>
-              <button onClick={() => setRepairType("full")} className={repairType === "full" ? "active" : ""}>
+              <button type="button" onClick={() => setRepairType("full")} className={repairType === "full" ? "active" : ""}>
                 All 4 corners<br /><span>£20 total</span>
               </button>
             </div>
@@ -50,7 +108,7 @@ export default function Home() {
                 <label>How many corners?</label>
                 <div className="choices four">
                   {[1, 2, 3, 4].map((n) => (
-                    <button key={n} onClick={() => setCorners(n)} className={corners === n ? "active" : ""}>
+                    <button type="button" key={n} onClick={() => setCorners(n)} className={corners === n ? "active" : ""}>
                       {n}
                     </button>
                   ))}
@@ -61,7 +119,7 @@ export default function Home() {
             <label>Quantity of talleisim</label>
             <div className="choices four">
               {[1, 2, 3].map((n) => (
-                <button key={n} onClick={() => setQuantity(n)} className={quantity === n ? "active" : ""}>
+                <button type="button" key={n} onClick={() => setQuantity(n)} className={quantity === n ? "active" : ""}>
                   {n}
                 </button>
               ))}
@@ -77,13 +135,13 @@ export default function Home() {
 
             <label>Collection / delivery</label>
             <div className="choices one">
-              <button onClick={() => setDelivery("dropoff")} className={delivery === "dropoff" ? "active" : ""}>
+              <button type="button" onClick={() => setDelivery("dropoff")} className={delivery === "dropoff" ? "active" : ""}>
                 Customer drop-off and customer collection<br /><span>Free</span>
               </button>
-              <button onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>
+              <button type="button" onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>
                 Collected and delivered to an NW11 address<br /><span>£5 total</span>
               </button>
-              <button onClick={() => setDelivery("nw4")} className={delivery === "nw4" ? "active" : ""}>
+              <button type="button" onClick={() => setDelivery("nw4")} className={delivery === "nw4" ? "active" : ""}>
                 Collected and delivered to an NW4 address<br /><span>£8 total</span>
               </button>
             </div>
@@ -127,14 +185,14 @@ export default function Home() {
           <div id="order" className="orderBox">
             <h2>Order details</h2>
 
-            <input placeholder="Name" />
-            <input placeholder="Phone number" />
-            <input placeholder="Email address" />
+            <input placeholder="Name" value={formData.name} onChange={(e) => updateField("name", e.target.value)} />
+            <input placeholder="Phone number" value={formData.phone} onChange={(e) => updateField("phone", e.target.value)} />
+            <input placeholder="Email address" value={formData.email} onChange={(e) => updateField("email", e.target.value)} />
 
             {delivery !== "dropoff" && (
               <>
-                <input placeholder="Collection / delivery address" />
-                <input placeholder="Postcode" />
+                <input placeholder="Collection / delivery address" value={formData.address} onChange={(e) => updateField("address", e.target.value)} />
+                <input placeholder="Postcode" value={formData.postcode} onChange={(e) => updateField("postcode", e.target.value)} />
               </>
             )}
 
@@ -144,18 +202,25 @@ export default function Home() {
               </p>
             )}
 
-            <textarea placeholder="What needs repairing? For example: 2 corners need new strings" />
-            <textarea placeholder="Preferred times for drop-off, collection or delivery" />
+            <textarea
+              placeholder="What needs repairing? For example: 2 corners need new strings"
+              value={formData.repairNotes}
+              onChange={(e) => updateField("repairNotes", e.target.value)}
+            />
+            <textarea
+              placeholder="Preferred times for drop-off, collection or delivery"
+              value={formData.preferredTimes}
+              onChange={(e) => updateField("preferredTimes", e.target.value)}
+            />
 
             <div className="total">
               <span>Order total</span>
               <strong>£{total}</strong>
             </div>
 
-            <button className="button full">Continue to payment</button>
-            <p className="small">
-              Payment button is ready to connect to Stripe Checkout.
-            </p>
+            <button type="button" className="button full" onClick={handleCheckout} disabled={isSubmitting}>
+              {isSubmitting ? "Opening payment..." : "Continue to payment"}
+            </button>
           </div>
         </div>
       </section>
