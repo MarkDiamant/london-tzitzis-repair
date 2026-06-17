@@ -85,6 +85,7 @@ export default function Home() {
             <div className="contactBox">
               <strong>Call only: 07562 717278</strong>
               <span>No text messages or WhatsApp</span>
+<span>Email: londontzitzisrepair@gmail.com</span>
             </div>
 
             <a href="#order" className="button">Order now</a>
@@ -139,10 +140,10 @@ export default function Home() {
                 Customer drop-off and customer collection<br /><span>Free</span>
               </button>
               <button type="button" onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>
-                Collected and delivered to an NW11 address<br /><span>£5 total</span>
+                Collected from and delivered to an NW11 address<br /><span>£5 total</span>
               </button>
               <button type="button" onClick={() => setDelivery("nw4")} className={delivery === "nw4" ? "active" : ""}>
-                Collected and delivered to an NW4 address<br /><span>£8 total</span>
+                Collected from and delivered to an NW4 address<br /><span>£8 total</span>
               </button>
             </div>
 
@@ -169,8 +170,8 @@ export default function Home() {
           <div>
             <h2>Collection and delivery</h2>
             <ul className="list">
-              <li>Collected and delivered to an NW11 address: £5 total</li>
-              <li>Collected and delivered to an NW4 address: £8 total</li>
+              <li>Collected from and delivered to an NW11 address: £5 total</li>
+              <li>Collected from and delivered to an NW4 address: £8 total</li>
               <li>All other areas: customer drop-off and customer collection only</li>
             </ul>
 
@@ -228,7 +229,7 @@ export default function Home() {
       <footer>
         <div className="wrap footerGrid">
           <span>London Tzitzis Repair</span>
-          <span>Call only: 07562 717278</span>
+          <span>Call only: 07562 717278 · londontzitzisrepair@gmail.com</span>
         </div>
       </footer>
     </main>
