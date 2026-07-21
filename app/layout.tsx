@@ -13,6 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/logo1.png",
+    shortcut: "/logo1.png",
+    apple: "/logo1.png",
+  },
   title: "London Tzitzis Repair",
   description:
     "Repair of tzitzis strings on tallis and tzitzis garments. From £6 per corner. Collection available in NW11 and NW4.",
