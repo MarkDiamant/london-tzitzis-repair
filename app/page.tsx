@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 export default function Home() {
@@ -75,6 +76,19 @@ export default function Home() {
       <section className="hero">
         <div className="wrap heroGrid">
           <div>
+            <Image
+              src="/logo1.png"
+              alt="London Tzitzis Repair"
+              width={180}
+              height={180}
+              priority
+              style={{
+                width: "180px",
+                height: "auto",
+                marginBottom: "24px",
+              }}
+            />
+
             <p className="eyebrow">Local Tzitzis String Repair</p>
             <h1>London Tzitzis Repair</h1>
             <p className="lead">
