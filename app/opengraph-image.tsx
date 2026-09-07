@@ -8,24 +8,24 @@ export default function OpenGraphImage() {
     <div style={{
       width: "100%", height: "100%", display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center", background: "#ffffff",
-      color: "#071d49", fontFamily: "Arial", padding: "44px 70px",
-      borderTop: "12px solid #c5962e", borderBottom: "12px solid #c5962e"
+      color: "#071d49", fontFamily: "Arial", padding: "28px 54px",
+      borderTop: "14px solid #c5962e", borderBottom: "14px solid #c5962e"
     }}>
       <img
         src="https://www.londontzitzisrepair.co.uk/logo1.png"
-        width="500" height="220"
-        style={{ objectFit: "contain", marginBottom: 18 }}
+        width="720" height="300"
+        style={{ objectFit: "contain", marginBottom: 8 }}
       />
-      <div style={{ width: 650, height: 2, background: "#c5962e", marginBottom: 24 }} />
+      <div style={{ width: 780, height: 3, background: "#c5962e", marginBottom: 18 }} />
       <div style={{
-        display: "flex", fontSize: 46, lineHeight: 1.08, fontWeight: 800,
-        textAlign: "center", maxWidth: 1000, marginBottom: 22
+        display: "flex", fontSize: 54, lineHeight: 1.05, fontWeight: 800,
+        textAlign: "center", maxWidth: 1080, marginBottom: 18
       }}>
         Tallis Tzitzis String Replacement & Repairs
       </div>
       <div style={{
-        display: "flex", fontSize: 28, letterSpacing: 1, color: "#263750",
-        textAlign: "center"
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 32, fontWeight: 600, color: "#263750", textAlign: "center"
       }}>
         1 corner £6   •   All 4 corners £20
       </div>
