@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: "Tallis tzitzis string replacement and repairs. From £6 per corner.",
     url: "https://www.londontzitzisrepair.co.uk",
     siteName: "London Tzitzis Repair",
-    images: [{ url: "/social-card?v=4", width: 1200, height: 630, alt: "London Tzitzis Repair - Tallis Tzitzis String Replacement & Repairs" }],
+    images: [{ url: "/social-card-v2", width: 1200, height: 630, alt: "London Tzitzis Repair - Tallis Tzitzis String Replacement & Repairs" }],
     locale: "en_GB",
     type: "website",
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "London Tzitzis Repair",
     description: "Tallis tzitzis string replacement and repairs. From £6 per corner.",
-    images: ["/social-card?v=4"],
+    images: ["/social-card-v2"],
   },
 };
 
