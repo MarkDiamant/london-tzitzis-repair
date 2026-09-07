@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { Resend } from "resend";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
-const resend = new Resend(process.env.RESEND_API_KEY || "");
 
 export async function POST(request: Request) {
   try {
@@ -33,51 +31,7 @@ export async function POST(request: Request) {
     }
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
-    const deliveryText =
-      delivery === "dropoff"
-        ? "Customer will drop off and collect themselves"
-        : delivery === "nw11"
-          ? "We collect and return to an NW11 address"
-          : "We collect and return to an NW4 address";
-
-    const repairText =
-      repairType === "full" ? "All 4 corners" : `${corners} corner(s)`;
-
-    const addressSection =
-      delivery === "dropoff"
-        ? "Collection / return address: Not required - customer selected drop-off & collection"
-        : `Collection / return address: ${address || "Not provided"}${postcode ? `, ${postcode}` : ""}`;
-
-    await resend.emails.send({
-      from: process.env.ORDER_EMAIL_FROM || "London Tzitzis Repair <onboarding@resend.dev>",
-      to: process.env.ORDER_EMAIL_TO || "londontzitzisrepair@gmail.com",
-      subject: `NEW ORDER - awaiting payment - £${total} - ${name}`,
-      text: `
-NEW ORDER - PAYMENT NOT YET CONFIRMED
-
-Total due: £${total}
-
-CUSTOMER
-Name: ${name}
-Phone: ${phone}
-Email: ${email}
-
-ORDER
-Repair required: ${repairText}
-Number of talleisim: ${quantity}
-Handover method: ${deliveryText}
-${addressSection}
-
-CUSTOMER'S REPAIR NOTES
-${repairNotes || "None provided"}
-
-PREFERRED TIMES
-${preferredTimes || "None provided"}
-
-IMPORTANT: This email is generated before Stripe Checkout. Do not treat it as confirmation of payment. A separate PAID ORDER email will follow after successful Stripe payment.
-      `.trim(),
-    });
+    const repairText = repairType === "full" ? "All 4 corners" : `${corners} corner(s)`;
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
