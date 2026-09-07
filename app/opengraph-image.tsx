@@ -12,12 +12,13 @@ export default function OpenGraphImage() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #111827 0%, #1c1917 55%, #3f3326 100%)",
+          background: "#ffffff",
           width: "100%",
           height: "100%",
           display: "flex",
-          padding: "70px",
-          color: "white",
+          alignItems: "center",
+          padding: "60px 72px",
+          color: "#071d49",
           fontFamily: "Arial",
           position: "relative",
         }}
@@ -25,84 +26,91 @@ export default function OpenGraphImage() {
         <div
           style={{
             position: "absolute",
-            right: 70,
-            top: 70,
-            background: "#f5f0e8",
-            color: "#111827",
-            width: 132,
-            height: 132,
-            borderRadius: 30,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 48,
-            fontWeight: 800,
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 18,
+            background: "#c5962e",
           }}
-        >
-          LTR
-        </div>
+        />
 
         <div
           style={{
+            width: "100%",
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            maxWidth: 900,
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 64,
           }}
         >
           <div
             style={{
-              fontSize: 28,
-              letterSpacing: 4,
-              textTransform: "uppercase",
-              color: "#d6c7a1",
-              fontWeight: 700,
-              marginBottom: 26,
+              width: 500,
+              height: 390,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#ffffff",
             }}
           >
-            Local Tzitzis String Repair
+            <img
+              src="https://www.londontzitzisrepair.co.uk/logo1.png"
+              width="480"
+              height="390"
+              style={{ objectFit: "contain" }}
+            />
           </div>
 
           <div
             style={{
-              fontSize: 86,
-              lineHeight: 1,
-              fontWeight: 900,
-              marginBottom: 26,
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
-            London Tzitzis Repair
-          </div>
+            <div
+              style={{
+                fontSize: 24,
+                letterSpacing: 5,
+                textTransform: "uppercase",
+                color: "#b48622",
+                fontWeight: 700,
+                marginBottom: 20,
+              }}
+            >
+              Quality Service You Can Trust
+            </div>
 
-          <div
-            style={{
-              width: 180,
-              height: 8,
-              background: "#d6c7a1",
-              borderRadius: 999,
-              marginBottom: 30,
-            }}
-          />
+            <div
+              style={{
+                fontSize: 58,
+                lineHeight: 1.06,
+                fontWeight: 800,
+                marginBottom: 25,
+              }}
+            >
+              Tallis Tzitzis String Replacement & Repairs
+            </div>
 
-          <div
-            style={{
-              fontSize: 38,
-              lineHeight: 1.35,
-              color: "#f5f0e8",
-              marginBottom: 32,
-            }}
-          >
-            From £6 per corner · NW11 & NW4 collection available
-          </div>
+            <div
+              style={{
+                width: 145,
+                height: 5,
+                background: "#c5962e",
+                marginBottom: 25,
+              }}
+            />
 
-          <div
-            style={{
-              fontSize: 34,
-              fontWeight: 800,
-              color: "white",
-            }}
-          >
-            Call only: 07562 717278
+            <div
+              style={{
+                fontSize: 31,
+                lineHeight: 1.3,
+                color: "#263750",
+              }}
+            >
+              1 corner £6  •  All 4 corners £20
+            </div>
           </div>
         </div>
       </div>
