@@ -36,42 +36,46 @@ export async function POST(request: Request) {
 
     const deliveryText =
       delivery === "dropoff"
-        ? "Customer drop-off and customer collection"
+        ? "Customer will drop off and collect themselves"
         : delivery === "nw11"
-          ? "Collected and delivered to an NW11 address"
-          : "Collected and delivered to an NW4 address";
+          ? "We collect and return to an NW11 address"
+          : "We collect and return to an NW4 address";
 
     const repairText =
       repairType === "full" ? "All 4 corners" : `${corners} corner(s)`;
 
+    const addressSection =
+      delivery === "dropoff"
+        ? "Collection / return address: Not required - customer selected drop-off & collection"
+        : `Collection / return address: ${address || "Not provided"}${postcode ? `, ${postcode}` : ""}`;
+
     await resend.emails.send({
       from: process.env.ORDER_EMAIL_FROM || "London Tzitzis Repair <onboarding@resend.dev>",
       to: process.env.ORDER_EMAIL_TO || "londontzitzisrepair@gmail.com",
-      subject: `New London Tzitzis Repair order - £${total}`,
+      subject: `NEW ORDER - awaiting payment - £${total} - ${name}`,
       text: `
-New London Tzitzis Repair order
+NEW ORDER - PAYMENT NOT YET CONFIRMED
 
-Amount: £${total}
+Total due: £${total}
 
-Customer
+CUSTOMER
 Name: ${name}
 Phone: ${phone}
 Email: ${email}
 
-Order
-Repair: ${repairText}
-Quantity of talleisim: ${quantity}
-Collection option: ${deliveryText}
+ORDER
+Repair required: ${repairText}
+Number of talleisim: ${quantity}
+Handover method: ${deliveryText}
+${addressSection}
 
-Address
-${address || "No address needed"}
-${postcode || ""}
+CUSTOMER'S REPAIR NOTES
+${repairNotes || "None provided"}
 
-What needs repairing
-${repairNotes || "Not provided"}
+PREFERRED TIMES
+${preferredTimes || "None provided"}
 
-Preferred times
-${preferredTimes || "Not provided"}
+IMPORTANT: This email is generated before Stripe Checkout. Do not treat it as confirmation of payment. A separate PAID ORDER email will follow after successful Stripe payment.
       `.trim(),
     });
 
