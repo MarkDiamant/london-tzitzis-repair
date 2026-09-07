@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.londontzitzisrepair.co.uk"),
   icons: {
     icon: "/logo1.png",
     shortcut: "/logo1.png",
@@ -20,19 +21,19 @@ export const metadata: Metadata = {
   },
   title: "London Tzitzis Repair",
   description:
-    "Repair of tzitzis strings on tallis and tzitzis garments. From £6 per corner. Collection available in NW11 and NW4.",
+    "Tallis tzitzis string replacement and repairs. From £6 per corner. Collection available in NW11 and NW4.",
   openGraph: {
     title: "London Tzitzis Repair",
     description:
-      "Repair of tzitzis strings on tallis and tzitzis garments. From £6 per corner.",
-    url: "https://londontzitzisrepair.co.uk",
+      "Tallis tzitzis string replacement and repairs. From £6 per corner.",
+    url: "https://www.londontzitzisrepair.co.uk",
     siteName: "London Tzitzis Repair",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image?v=2026090703",
         width: 1200,
         height: 630,
-        alt: "London Tzitzis Repair",
+        alt: "London Tzitzis Repair - Tallis Tzitzis String Replacement & Repairs",
       },
     ],
     locale: "en_GB",
@@ -41,8 +42,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "London Tzitzis Repair",
-    description: "Repair of tzitzis strings on tallis and tzitzis garments.",
-    images: ["/opengraph-image"],
+    description: "Tallis tzitzis string replacement and repairs. From £6 per corner.",
+    images: ["/opengraph-image?v=2026090703"],
   },
 };
 
