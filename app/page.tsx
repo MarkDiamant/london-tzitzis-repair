@@ -10,95 +10,17 @@ export default function Home() {
   const [quantity, setQuantity] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", address: "", postcode: "", repairNotes: "", preferredTimes: "" });
-
   const repairTotal = repairType === "full" ? 20 : corners === 4 ? 20 : corners * 6;
   const deliveryTotal = delivery === "nw11" ? 5 : delivery === "nw4" ? 8 : 0;
   const total = useMemo(() => repairTotal * quantity + deliveryTotal, [repairTotal, quantity, deliveryTotal]);
   const updateField = (field: keyof typeof formData, value: string) => setFormData((current) => ({ ...current, [field]: value }));
-
-  const handleCheckout = async () => {
-    if (!formData.name || !formData.phone || !formData.email) { alert("Please enter your name, phone number and email address."); return; }
-    if (delivery !== "dropoff" && (!formData.address || !formData.postcode)) { alert("Please enter your collection and delivery address."); return; }
-    setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ repairType, corners, quantity, delivery, total, ...formData }) });
-      const data = await response.json();
-      if (!response.ok || !data.url) { alert(data.error || "Unable to start payment. Please try again."); setIsSubmitting(false); return; }
-      window.location.href = data.url;
-    } catch { alert("Unable to start payment. Please try again."); setIsSubmitting(false); }
-  };
-
-  return (
-    <main className="site">
-      <header className="topbar">
-        <div className="wrap nav">
-          <Image src="/logo1.png" alt="London Tzitzis Repair" width={150} height={80} className="navLogo" priority />
-          <div className="navLinks"><a href="#pricing">Pricing</a><a href="#collection">Collection</a><a href="#order" className="navButton">Order now</a></div>
-        </div>
-      </header>
-
-      <section className="hero">
-        <div className="heroGlow" />
-        <div className="wrap heroGrid">
-          <div className="heroCopy">
-            <p className="eyebrow">Quality service you can trust</p>
-            <h1>Tallis tzitzis string <span>replacement & repairs</span></h1>
-            <p className="lead">Professional, reliable string replacement and repairs with clear pricing and convenient local collection options.</p>
-            <div className="trustRow"><span>✓ All minhagim</span><span>✓ Clear pricing</span><span>✓ Local service</span></div>
-            <div className="heroActions"><a href="#order" className="button">Start an order</a><a href="tel:07562717278" className="button secondary">Call 07562 717278</a></div>
-            <p className="contactNote">Call only, no text messages or WhatsApp · londontzitzisrepair@gmail.com</p>
-          </div>
-
-          <div className="priceCard">
-            <div className="cardTop"><div><p className="miniLabel">Instant price</p><h2>Build your order</h2></div><div className="priceBadge">From £6</div></div>
-            <label>Repair type</label>
-            <div className="choices two">
-              <button type="button" onClick={() => setRepairType("corner")} className={repairType === "corner" ? "active" : ""}>Per corner<br /><span>£6 each</span></button>
-              <button type="button" onClick={() => setRepairType("full")} className={repairType === "full" ? "active" : ""}>All 4 corners<br /><span>£20 total</span></button>
-            </div>
-            {repairType === "corner" && <><label>How many corners?</label><div className="choices four">{[1,2,3,4].map((n) => <button type="button" key={n} onClick={() => setCorners(n)} className={corners === n ? "active" : ""}>{n}</button>)}</div></>}
-            <label>Quantity of talleisim</label>
-            <div className="choices four">{[1,2,3].map((n) => <button type="button" key={n} onClick={() => setQuantity(n)} className={quantity === n ? "active" : ""}>{n}</button>)}<input type="number" min="4" value={quantity >= 4 ? quantity : ""} onChange={(e) => setQuantity(Math.max(4, Number(e.target.value) || 4))} placeholder="4+" className="quantityInput" /></div>
-            <label>Collection / delivery</label>
-            <div className="choices one">
-              <button type="button" onClick={() => setDelivery("dropoff")} className={delivery === "dropoff" ? "active" : ""}>Customer drop-off & collection <span>Free</span></button>
-              <button type="button" onClick={() => setDelivery("nw11")} className={delivery === "nw11" ? "active" : ""}>NW11 collection & delivery <span>£5 total</span></button>
-              <button type="button" onClick={() => setDelivery("nw4")} className={delivery === "nw4" ? "active" : ""}>NW4 collection & delivery <span>£8 total</span></button>
-            </div>
-            <div className="total"><span>Your total</span><strong>£{total}</strong></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="featureStrip"><div className="wrap features"><div><strong>Professional</strong><span>Careful, reliable service</span></div><div><strong>Flexible</strong><span>Tied according to all minhagim</span></div><div><strong>Convenient</strong><span>NW11 & NW4 collection options</span></div></div></section>
-
-      <section id="pricing" className="wrap section">
-        <div className="sectionHead"><p className="eyebrow">Simple pricing</p><h2>No surprises. Just clear prices.</h2></div>
-        <div className="cards"><div className="card"><h3>1 Corner</h3><p>£6</p></div><div className="card"><h3>2 Corners</h3><p>£12</p></div><div className="card"><h3>3 Corners</h3><p>£18</p></div><div className="card dark"><span className="bestValue">Best value</span><h3>All 4 Corners</h3><p>£20</p></div></div>
-      </section>
-
-      <section id="collection" className="band">
-        <div className="wrap section twoCol">
-          <div className="collectionCopy"><p className="eyebrow">Collection & delivery</p><h2>Making it easy to get your tallis sorted.</h2><div className="deliveryItem"><b>NW11</b><span>Collected and delivered back to you for £5 total.</span></div><div className="deliveryItem"><b>NW4</b><span>Collected and delivered back to you for £8 total.</span></div><div className="deliveryItem"><b>Other areas</b><span>Customer drop-off and customer collection.</span></div><div className="address"><span>Drop-off address</span><strong>4 Eastville Avenue, London, NW11 0HD</strong></div></div>
-
-          <div id="order" className="orderBox">
-            <p className="miniLabel">Ready to go?</p><h2>Order details</h2>
-            <div className="formGrid"><input placeholder="Name" value={formData.name} onChange={(e) => updateField("name", e.target.value)} /><input placeholder="Phone number" value={formData.phone} onChange={(e) => updateField("phone", e.target.value)} /></div>
-            <input placeholder="Email address" value={formData.email} onChange={(e) => updateField("email", e.target.value)} />
-            {delivery !== "dropoff" && <><input placeholder="Collection / delivery address" value={formData.address} onChange={(e) => updateField("address", e.target.value)} /><input placeholder="Postcode" value={formData.postcode} onChange={(e) => updateField("postcode", e.target.value)} /></>}
-            {delivery === "dropoff" && <p className="notice">You selected customer drop-off and collection, so no home address is needed.</p>}
-            <textarea placeholder="What needs repairing? For example: 2 corners need new strings" value={formData.repairNotes} onChange={(e) => updateField("repairNotes", e.target.value)} />
-            <textarea placeholder="Preferred times for drop-off, collection or delivery" value={formData.preferredTimes} onChange={(e) => updateField("preferredTimes", e.target.value)} />
-            <div className="total"><span>Order total</span><strong>£{total}</strong></div>
-            <button type="button" className="button full" onClick={handleCheckout} disabled={isSubmitting}>{isSubmitting ? "Opening payment..." : "Continue to secure payment"}</button>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <div className="wrap footerMain"><div><Image src="/logo1.png" alt="London Tzitzis Repair" width={145} height={70} className="footerLogo" /><p>Tallis tzitzis string replacement & repairs in London.</p></div><div className="footerContact"><strong>07562 717278</strong><span>londontzitzisrepair@gmail.com</span></div></div>
-        <div className="wrap footerBottom"><span>© {new Date().getFullYear()} London Tzitzis Repair. All rights reserved.</span><a href="https://diamantsolutions.co.uk" target="_blank" rel="noopener noreferrer" className="builtBy"><span>Built by</span><span className="diamondMark">◆</span><strong>DIAMANT SOLUTIONS</strong><small>Websites • Systems • Automation</small></a></div>
-      </footer>
-    </main>
-  );
+  const handleCheckout = async () => { if (!formData.name || !formData.phone || !formData.email) { alert("Please enter your name, phone number and email address."); return; } if (delivery !== "dropoff" && (!formData.address || !formData.postcode)) { alert("Please enter your collection and delivery address."); return; } setIsSubmitting(true); try { const response = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ repairType, corners, quantity, delivery, total, ...formData }) }); const data = await response.json(); if (!response.ok || !data.url) { alert(data.error || "Unable to start payment. Please try again."); setIsSubmitting(false); return; } window.location.href = data.url; } catch { alert("Unable to start payment. Please try again."); setIsSubmitting(false); } };
+  return <main className="site">
+    <header className="topbar"><div className="wrap nav"><Image src="/logo1.png" alt="London Tzitzis Repair" width={150} height={80} className="navLogo" priority /><div className="navLinks"><a href="#pricing">Pricing</a><a href="#collection">Collection</a><a href="#order" className="navButton">Order now</a></div></div></header>
+    <section className="hero"><div className="heroGlow" /><div className="wrap heroGrid"><div className="heroCopy"><p className="eyebrow">Quality service you can trust</p><h1>Tallis tzitzis string <span>replacement & repairs</span></h1><p className="lead">Professional, reliable string replacement and repairs with clear pricing and convenient local collection options.</p><div className="trustRow"><span>✓ All minhagim</span><span>✓ Clear pricing</span><span>✓ Local service</span></div><div className="heroActions"><a href="#order" className="button">Start an order</a><a href="tel:07562717278" className="button secondary">Call 07562 717278</a></div><p className="contactNote">Call only, no text messages or WhatsApp · londontzitzisrepair@gmail.com</p></div><div className="priceCard"><div className="cardTop"><div><p className="miniLabel">Instant price</p><h2>Build your order</h2></div><div className="priceBadge">From £6</div></div><label>Repair type</label><div className="choices two"><button type="button" onClick={() => setRepairType("corner")} className={repairType === "corner" ? "active" : ""}>Per corner<br /><span>£6 each</span></button><button type="button" onClick={() => setRepairType("full")} className={repairType === "full" ? "active" : ""}>All 4 corners<br /><span>£20 total</span></button></div>{repairType === "corner" && <><label>How many corners?</label><div className="choices four">{[1,2,3,4].map(n=><button type="button" key={n} onClick={()=>setCorners(n)} className={corners===n?"active":""}>{n}</button>)}</div></>}<label>Quantity of talleisim</label><div className="choices four">{[1,2,3].map(n=><button type="button" key={n} onClick={()=>setQuantity(n)} className={quantity===n?"active":""}>{n}</button>)}<input type="number" min="4" value={quantity>=4?quantity:""} onChange={e=>setQuantity(Math.max(4,Number(e.target.value)||4))} placeholder="4+" className="quantityInput" /></div><label>Collection / delivery</label><div className="choices one"><button type="button" onClick={()=>setDelivery("dropoff")} className={delivery==="dropoff"?"active":""}>Customer drop-off & collection <span>Free</span></button><button type="button" onClick={()=>setDelivery("nw11")} className={delivery==="nw11"?"active":""}>NW11 collection & delivery <span>£5 total</span></button><button type="button" onClick={()=>setDelivery("nw4")} className={delivery==="nw4"?"active":""}>NW4 collection & delivery <span>£8 total</span></button></div><div className="total"><span>Your total</span><strong>£{total}</strong></div></div></div></section>
+    <section className="featureStrip"><div className="wrap features"><div><strong>Professional</strong><span>Careful, reliable service</span></div><div><strong>Flexible</strong><span>Tied according to all minhagim</span></div><div><strong>Convenient</strong><span>NW11 & NW4 collection options</span></div></div></section>
+    <section id="pricing" className="wrap section"><div className="sectionHead"><p className="eyebrow">Simple pricing</p><h2>No surprises. Just clear prices.</h2></div><div className="cards"><div className="card"><h3>1 Corner</h3><p>£6</p></div><div className="card"><h3>2 Corners</h3><p>£12</p></div><div className="card"><h3>3 Corners</h3><p>£18</p></div><div className="card dark"><span className="bestValue">Best value</span><h3>All 4 Corners</h3><p>£20</p></div></div></section>
+    <section id="collection" className="band"><div className="wrap section twoCol"><div className="collectionCopy"><p className="eyebrow">Collection & delivery</p><h2>Making it easy to get your tallis sorted.</h2><div className="deliveryItem"><b>NW11</b><span>Collected and delivered back to you for £5 total.</span></div><div className="deliveryItem"><b>NW4</b><span>Collected and delivered back to you for £8 total.</span></div><div className="deliveryItem"><b>Other areas</b><span>Customer drop-off and customer collection.</span></div><div className="address"><span>Drop-off address</span><strong>4 Eastville Avenue, London, NW11 0HD</strong></div></div><div id="order" className="orderBox"><p className="miniLabel">Ready to go?</p><h2>Order details</h2><div className="formGrid"><input placeholder="Name" value={formData.name} onChange={e=>updateField("name",e.target.value)} /><input placeholder="Phone number" value={formData.phone} onChange={e=>updateField("phone",e.target.value)} /></div><input placeholder="Email address" value={formData.email} onChange={e=>updateField("email",e.target.value)} />{delivery!=="dropoff"&&<><input placeholder="Collection / delivery address" value={formData.address} onChange={e=>updateField("address",e.target.value)} /><input placeholder="Postcode" value={formData.postcode} onChange={e=>updateField("postcode",e.target.value)} /></>}{delivery==="dropoff"&&<p className="notice">You selected customer drop-off and collection, so no home address is needed.</p>}<textarea placeholder="What needs repairing? For example: 2 corners need new strings" value={formData.repairNotes} onChange={e=>updateField("repairNotes",e.target.value)} /><textarea placeholder="Preferred times for drop-off, collection or delivery" value={formData.preferredTimes} onChange={e=>updateField("preferredTimes",e.target.value)} /><div className="total"><span>Order total</span><strong>£{total}</strong></div><button type="button" className="button full" onClick={handleCheckout} disabled={isSubmitting}>{isSubmitting?"Opening payment...":"Continue to secure payment"}</button></div></div></section>
+    <footer><div className="wrap footerMain"><div><Image src="/logo1.png" alt="London Tzitzis Repair" width={145} height={70} className="footerLogo" /><p>Tallis tzitzis string replacement & repairs in London.</p></div><div className="footerContact"><strong>07562 717278</strong><span>londontzitzisrepair@gmail.com</span></div></div><div className="wrap footerBottom"><span>© {new Date().getFullYear()} London Tzitzis Repair. All rights reserved.</span><a href="https://diamantsolutions.co.uk" target="_blank" rel="noopener noreferrer" className="builtBy"><div className="builtByLine"><span>Built by</span><img src="/diamant-solutions-logo.svg" alt="Diamant Solutions" /></div><small>Websites • Systems • Automation</small></a></div></footer>
+  </main>;
 }
